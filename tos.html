@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - DamarJati Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --background-color: #f8fafc;
+            --text-color: #334155;
+            --card-background: #ffffff;
+            --border-color: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        body.nav-open {
+            overflow: hidden; 
+        }
+        .container {
+            width: 100%;
+            max-width: 900px; /* Lebar container disesuaikan untuk teks */
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        a { text-decoration: none; color: var(--primary-color); }
+
+        /* --- Header, Nav, & Burger Menu --- */
+        .header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky; top: 0; z-index: 50000;
+        }
+        .nav-container { /* Container khusus untuk nav agar bisa full-width */
+             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-desktop-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-desktop-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: color 0.2s ease; }
+        .nav-desktop-links a:hover, .nav-desktop-links a.active { color: var(--primary-color); }
+        .nav-burger { display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; z-index: 1001; position: relative; }
+        .burger-line { width: 28px; height: 3px; background-color: var(--text-color); border-radius: 3px; margin: 5px 0; transition: all 0.3s ease-in-out; }
+        body.nav-open .nav-burger { position: fixed; top: 1rem; right: 1.5rem; }
+        body.nav-open .burger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        body.nav-open .burger-line:nth-child(2) { opacity: 0; }
+        body.nav-open .burger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        .nav-mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--card-background); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 2rem;
+            opacity: 0; visibility: hidden; transform: translateY(-20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        .nav-mobile-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .nav-mobile-links { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; }
+        .nav-mobile-links a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 1.5rem; }
+
+        /* --- Content Styling --- */
+        .content-section {
+            padding: 3rem 0;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+        .prose {
+            line-height: 1.8;
+        }
+        .prose h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .prose h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .prose p, .prose ul {
+            margin-bottom: 1.2rem;
+        }
+        .prose ul {
+            padding-left: 1.5rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #1e293b; color: #94a3b8; padding: 2.5rem 0; text-align: center; margin-top: 4rem;
+        }
+        .footer p { margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; list-style: none; }
+        .footer-links a { color: #94a3b8; transition: color 0.2s ease; }
+        .footer-links a:hover { color: white; }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .nav-desktop-links { display: none; }
+            .nav-burger { display: block; }
+            .container { padding: 0 1rem; }
+            .page-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="nav-logo">DamarJati Hub</a>
+            <ul class="nav-desktop-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Guides</a></li>
+                <li><a href="#">Discussions</a></li>
+                <li><a href="#">Contribute</a></li>
+            </ul>
+            <button class="nav-burger" id="burger-menu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </button>
+        </nav>
+    </header>
+
+    <div class="nav-mobile-menu" id="nav-menu">
+        <ul class="nav-mobile-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Discussions</a></li>
+            <li><a href="#">Contribute</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <header class="page-header">
+                    <h1>Terms of Service</h1>
+                    <p>Terakhir diperbarui: 13 Oktober 2025</p>
+                </header>
+
+                <article class="prose">
+                    <p>Selamat datang di DamarJati Hub. Dengan mengakses atau menggunakan situs web kami ("Layanan"), Anda setuju untuk terikat oleh Ketentuan Layanan ini ("Ketentuan"). Jika Anda tidak setuju dengan bagian mana pun dari ketentuan ini, Anda tidak diizinkan untuk menggunakan Layanan.</p>
+
+                    <h2>1. Penggunaan Layanan</h2>
+                    <p>Anda setuju untuk menggunakan Layanan hanya untuk tujuan yang sah dan sesuai dengan Ketentuan ini. Anda bertanggung jawab penuh atas semua konten, data, atau informasi yang Anda unggah, posting, atau tampilkan saat menggunakan Layanan.</p>
+                    <h3>Akun Pengguna</h3>
+                    <p>Untuk mengakses beberapa fitur Layanan, Anda mungkin diharuskan membuat akun. Anda bertanggung jawab untuk menjaga kerahasiaan kata sandi Anda dan untuk semua aktivitas yang terjadi di bawah akun Anda.</p>
+
+                    <h2>2. Konten Pengguna</h2>
+                    <p>Layanan kami memungkinkan Anda untuk memposting, menautkan, dan menyediakan konten. Anda mempertahankan kepemilikan atas konten Anda, tetapi dengan mempostingnya, Anda memberikan kami lisensi non-eksklusif, bebas royalti, di seluruh dunia untuk menggunakan, mereproduksi, dan mendistribusikan konten tersebut sehubungan dengan penyediaan Layanan.</p>
+                    <h3>Larangan</h3>
+                    <ul>
+                        <li>Anda tidak boleh memposting konten yang melanggar hukum, menipu, atau berbahaya.</li>
+                        <li>Anda tidak boleh memposting konten yang melanggar hak kekayaan intelektual orang lain.</li>
+                        <li>Anda tidak boleh menggunakan Layanan untuk menyebarkan spam atau perangkat lunak berbahaya.</li>
+                    </ul>
+
+                    <h2>3. Lisensi Open Source</h2>
+                    <p>Sebagian besar proyek yang ditampilkan di DamarJati Hub diatur oleh lisensi open source masing-masing. Dengan menggunakan atau berkontribusi pada proyek-proyek tersebut, Anda setuju untuk mematuhi ketentuan lisensi yang berlaku untuk proyek tersebut.</p>
+
+                    <h2>4. Pembatasan Tanggung Jawab</h2>
+                    <p>Layanan ini disediakan "SEBAGAIMANA ADANYA" dan "SEBAGAIMANA TERSEDIA" tanpa jaminan apa pun. DamarJati Hub tidak menjamin bahwa Layanan akan selalu aman, bebas dari kesalahan, atau tidak terganggu.</p>
+                    <p>Dalam keadaan apa pun, DamarJati Hub, direktur, karyawan, atau afiliasinya tidak akan bertanggung jawab atas segala kerusakan tidak langsung, insidental, atau konsekuensial yang timbul dari penggunaan atau ketidakmampuan Anda untuk menggunakan Layanan.</p>
+
+                    <h2>5. Perubahan Ketentuan</h2>
+                    <p>Kami berhak, atas kebijakan kami sendiri, untuk mengubah atau mengganti Ketentuan ini kapan saja. Jika revisi bersifat material, kami akan memberikan pemberitahuan setidaknya 30 hari sebelum ketentuan baru berlaku. Apa yang merupakan perubahan material akan ditentukan atas kebijakan kami sendiri.</p>
+
+                    <h2>6. Kontak Kami</h2>
+                    <p>Jika Anda memiliki pertanyaan tentang Ketentuan ini, silakan hubungi kami melalui email di <a href="mailto:contact@damarjatihub.com">contact@damarjatihub.com</a>.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 DamarJati Hub. Dibuat dengan semangat open source.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+
+        const burgerMenu = document.getElementById('burger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        if (burgerMenu && navMenu) {
+            burgerMenu.addEventListener('click', () => {
+                document.body.classList.toggle('nav-open');
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Overview - DamarJati Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* --- Base & Reusable Styles --- */
+        :root {
+            --primary-color: #4f46e5;
+            --background-color: #f8fafc;
+            --text-color: #334155;
+            --card-background: #ffffff;
+            --border-color: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden; /* Mencegah scroll horizontal global */
+        }
+        body.nav-open {
+            overflow: hidden; 
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        img { max-width: 100%; height: auto; }
+        a { text-decoration: none; color: var(--primary-color); }
+
+        /* --- Header, Nav, & Burger Menu --- */
+        .header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky; top: 0; z-index: 50000;
+        }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-desktop-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-desktop-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: color 0.2s ease; }
+        .nav-desktop-links a:hover, .nav-desktop-links a.active { color: var(--primary-color); }
+
+        .nav-burger {
+            display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; z-index: 1001; position: relative;
+        }
+        .burger-line {
+            width: 28px; height: 3px; background-color: var(--text-color); border-radius: 3px; margin: 5px 0; transition: all 0.3s ease-in-out;
+        }
+        body.nav-open .nav-burger { position: fixed; top: 1rem; right: 1.5rem; }
+        body.nav-open .burger-line { background-color: var(--text-color); }
+        body.nav-open .burger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        body.nav-open .burger-line:nth-child(2) { opacity: 0; }
+        body.nav-open .burger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        .nav-mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--card-background); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 2rem;
+            opacity: 0; visibility: hidden; transform: translateY(-20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        .nav-mobile-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .nav-mobile-links { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; }
+        .nav-mobile-links a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 1.5rem; transition: color 0.2s ease; }
+        .nav-mobile-links a:hover, .nav-mobile-links a.active { color: var(--primary-color); }
+
+        .footer {
+            background-color: #1e293b; color: #94a3b8; padding: 2.5rem 0; text-align: center; margin-top: 4rem;
+        }
+        .footer p { margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; list-style: none; }
+        .footer-links a { color: #94a3b8; transition: color 0.2s ease; }
+        .footer-links a:hover { color: white; }
+
+        /* --- PERBAIKAN: Overview Page Layout --- */
+        .overview-container { padding: 2.5rem 0; }
+        .overview-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 320px; 
+            gap: 2rem; 
+            align-items: flex-start; 
+            width: 100%;
+        }
+        /* Mencegah elemen anak keluar dari grid column */
+        .main-content, .sidebar {
+            min-width: 0;
+        }
+        .sidebar { display: flex; flex-direction: column; gap: 2rem; position: sticky; top: 95px; }
+        .sidebar-section-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; }
+        .card {
+            background-color: var(--card-background); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+            width: 100%; /* Memastikan card mengisi ruang kolom */
+        }
+
+        /* --- Kolom Kiri: Project Header & Tabs --- */
+        .project-header { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+        .project-header-top { display: flex; align-items: center; gap: 1.5rem; }
+        .project-icon { width: 80px; height: 80px; border-radius: 16px; object-fit: contain; padding: 8px; background-color: white; border: 1px solid var(--border-color); }
+        .project-title h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
+        .project-header > .project-description { font-size: 1rem; color: #64748b; max-width: 80ch; }
+        .project-actions { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease; }
+        .btn i { width: 18px; height: 18px; }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-secondary { background-color: var(--card-background); color: var(--text-color); border-color: var(--border-color); }
+        .btn-secondary:hover { border-color: #cbd5e1; }
+        
+        .tabs-nav { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+        .tab-btn { padding: 0.75rem 1.25rem; border: none; background-color: transparent; font-size: 1rem; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transform: translateY(1px); color: #64748b; }
+        .tab-btn:hover { color: var(--primary-color); }
+        .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); font-weight: 600; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* --- Deskripsi / Prose & Code Block Styling --- */
+        .prose { line-height: 1.7; }
+        .prose h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; font-weight: 600; }
+        .prose p { margin-bottom: 1rem; }
+        .prose ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .prose pre {
+            background-color: #f1f5f9; padding: 1rem; border-radius: 8px;
+            overflow-x: auto; margin: 1rem 0; border: 1px solid var(--border-color);
+        }
+        .prose code, .file-tree-code {
+            font-family: 'Courier New', Courier, monospace; font-size: 0.9rem;
+        }
+        .prose p > code {
+            background-color: #eef2ff; color: var(--primary-color); padding: 2px 6px; border-radius: 4px;
+        }
+
+        /* --- PERBAIKAN: File Structure Tab (Format Baru) --- */
+        .file-tree-code {
+            background-color: transparent; border: none; padding: 0; color: #334155;
+            line-height: 1.8; white-space: pre;
+        }
+
+        /* --- License Tab --- */
+        .license-content {
+            background-color: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 1rem; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; color: #475569;
+        }
+
+        /* --- Kolom Kanan: Sidebar --- */
+        .stats-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+        .stats-list li { display: flex; align-items: center; justify-content: space-between; }
+        .stat-item-label { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; }
+        .stat-item-label i { width: 20px; height: 20px; color: #64748b; }
+        .stat-item-value { font-weight: 600; font-size: 1rem; }
+        .relevant-projects .project-card {
+            background-color: var(--card-background); border-radius: 16px; padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column;
+            width: 100%; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .relevant-projects .project-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0, 0, 0, 0.07); }
+        .relevant-projects .card-logo { width: 48px; height: 48px; border-radius: 12px; object-fit: contain; background-color: #fff; border: 1px solid var(--border-color); margin-bottom: 1rem; }
+        .relevant-projects .card-repo-id { position: absolute; top: 16px; right: 16px; font-size: 0.8rem; font-weight: 500; color: #888; }
+        
+        /* --- Responsive Layout --- */
+        @media (max-width: 992px) {
+            .overview-grid { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+        }
+        @media (max-width: 768px) {
+            .nav-desktop-links { display: none; }
+            .nav-burger { display: block; }
+            .project-header-top { flex-direction: column; align-items: flex-start; }
+            .project-title h1 { font-size: 2rem; }
+            .container { padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="nav-logo">DamarJati Hub</a>
+                <ul class="nav-desktop-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#" class="active">Explore</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Discussions</a></li>
+                    <li><a href="#">Contribute</a></li>
+                </ul>
+                <button class="nav-burger" id="burger-menu">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-mobile-menu" id="nav-menu">
+        <ul class="nav-mobile-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#" class="active">Explore</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Discussions</a></li>
+            <li><a href="#">Contribute</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="container overview-container">
+            <div class="overview-grid">
+                <div class="main-content">
+                    <section class="project-header card">
+                        <div class="project-header-top">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Project Icon" class="project-icon">
+                            <div class="project-title"><h1>React Library</h1></div>
+                        </div>
+                        <p class="project-description">A declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose complex UIs from small and isolated pieces of code called “components”.</p>
+                        <div class="project-actions">
+                            <a href="#" class="btn btn-primary"><i data-feather="github"></i><span>Kunjungi GitHub</span></a>
+                            <a href="#" class="btn btn-secondary"><i data-feather="star"></i><span>Beri Bintang</span></a>
+                        </div>
+                    </section>
+
+                    <section class="card tabs-container">
+                        <nav class="tabs-nav">
+                            <button class="tab-btn active" data-tab="tab-description">Deskripsi</button>
+                            <button class="tab-btn" data-tab="tab-files">Struktur File</button>
+                            <button class="tab-btn" data-tab="tab-license">Lisensi</button>
+                        </nav>
+
+                        <div id="tab-description" class="tab-content active">
+                            <article class="prose">
+                                <h3>Tentang React</h3>
+                                <p>React (juga dikenal sebagai React.js) adalah pustaka JavaScript untuk membangun antarmuka pengguna. Pustaka ini dikelola oleh Meta dan komunitas pengembang.</p>
+                                <p>Berikut adalah contoh komponen sederhana di React. Anda bisa menyimpannya dalam file berekstensi <code>.jsx</code>.</p>
+                                <pre><code>import React from 'react';
+
+function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}
+
+export default Welcome;
+</code></pre>
+                            </article>
+                        </div>
+
+                        <div id="tab-files" class="tab-content">
+                            <pre><code class="file-tree-code">react/
+├── packages/
+│   ├── react/
+│   └── react-dom/
+├── scripts/
+│   ├── build.js
+│   └── test.js
+├── LICENSE
+├── package.json
+└── README.md
+</code></pre>
+                        </div>
+                        
+                        <div id="tab-license" class="tab-content">
+                            <pre class="license-content">MIT License
+
+Copyright (c) 2013-present, Facebook, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions...
+</pre>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="sidebar">
+                    <section class="card">
+                        <h3 class="sidebar-section-title">Statistik Proyek</h3>
+                        <ul class="stats-list">
+                            <li><span class="stat-item-label"><i data-feather="star"></i> Bintang</span><span class="stat-item-value">210k</span></li>
+                            <li><span class="stat-item-label"><i data-feather="git-merge"></i> Forks</span><span class="stat-item-value">45k</span></li>
+                            <li><span class="stat-item-label"><i data-feather="users"></i> Kontributor</span><span class="stat-item-value">1.6k</span></li>
+                        </ul>
+                    </section>
+                    
+                    <section class="relevant-projects card">
+                        <h3 class="sidebar-section-title">Proyek Relevan</h3>
+                        <article class="project-card">
+                            <a href="#" class="card-repo-id">vuejs/vue</a>
+                            <div>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1200px-Vue.js_Logo_2.svg.png" alt="Logo" class="card-logo">
+                                <h4 class="card-title">Vue.js</h4>
+                                <p class="card-description">The Progressive JavaScript Framework for building modern web UIs.</p>
+                            </div>
+                        </article>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 DamarJati Hub. Dibuat dengan semangat open source.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+
+        const burgerMenu = document.getElementById('burger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        if (burgerMenu && navMenu) {
+            burgerMenu.addEventListener('click', () => {
+                document.body.classList.toggle('nav-open');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        const tabsContainer = document.querySelector('.tabs-container');
+        if (tabsContainer) {
+            const tabButtons = tabsContainer.querySelectorAll('.tab-btn');
+            const tabContents = tabsContainer.querySelectorAll('.tab-content');
+            tabsContainer.addEventListener('click', (e) => {
+                const clickedButton = e.target.closest('.tab-btn');
+                if (!clickedButton) return;
+
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                clickedButton.classList.add('active');
+                const tabId = clickedButton.dataset.tab;
+                const activeContent = document.getElementById(tabId);
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

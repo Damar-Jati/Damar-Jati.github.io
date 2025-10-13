@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DamarJati Hub - Kolaborasi Open Source Indonesia</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --background-color: #f8fafc;
+            --text-color: #334155;
+            --card-background: #ffffff;
+            --border-color: #e2e8f0;
+            --pastel-bg: #f5f3ff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        body.nav-open { overflow: hidden; }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* --- Header & Navigation (UNCHANGED) --- */
+        .header { background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 1rem 0; position: sticky; top: 0; z-index: 50000; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-desktop-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-desktop-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: color 0.2s ease; }
+        .nav-desktop-links a:hover, .nav-desktop-links a.active { color: var(--primary-color); }
+        .nav-burger { display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; z-index: 1001; position: relative; }
+        .burger-line { width: 28px; height: 3px; background-color: var(--text-color); border-radius: 3px; margin: 5px 0; transition: all 0.3s ease-in-out; }
+        body.nav-open .nav-burger { position: fixed; top: 1rem; right: 1.5rem; }
+        .nav-mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--card-background); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2rem; opacity: 0; visibility: hidden; transform: translateY(-20px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; z-index: 1000; }
+        .nav-mobile-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .nav-mobile-links { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; }
+        .nav-mobile-links a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 1.5rem; }
+
+        /* --- Floating Hero Section --- */
+        .hero-wrapper { padding: 1.5rem; }
+        .hero-container { background-color: var(--pastel-bg); border-radius: 24px; padding: 3rem; display: flex; flex-direction: column; height: calc(100vh - 121px); min-height: 600px; overflow: hidden; }
+        .hero-content { text-align: center; flex-shrink: 0; }
+        .hero-content h1 { font-size: 2.8rem; font-weight: 700; max-width: 700px; margin: 0 auto 1rem auto; }
+        .hero-content p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 1.5rem auto; }
+        /* --- NEW: Explore Button --- */
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem; /* Space before the cards */
+            transition: background-color 0.2s ease;
+        }
+        .hero-cta:hover { background-color: #4338ca; }
+
+        /* --- Horizontally Scrolling Card Area --- */
+        .card-scroller { display: flex; gap: 1.5rem; align-items: flex-end; padding-bottom: 1.5rem; overflow-x: auto; flex-grow: 1; -ms-overflow-style: none; scrollbar-width: none; }
+        .card-scroller::-webkit-scrollbar { display: none; }
+
+        /* --- Project Card Styles (REVISED) --- */
+        .project-card { 
+            flex: 0 0 340px; 
+            background-color: var(--card-background); 
+            border-radius: 16px; 
+            padding: 24px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+            display: flex; 
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+        
+        /* --- REVISED: Card Header with Inline Icon --- */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .card-logo-inline {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .card-title { font-size: 1.3rem; font-weight: 600; }
+        
+        .card-description { font-size: 0.85rem; line-height: 1.6; color: #555; flex-grow: 1; }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+        .tech-stack span { font-size: 0.7rem; font-weight: 500; padding: 3px 8px; border-radius: 12px; }
+        
+        /* --- REVISED: Meta Row Spacing --- */
+        .card-meta-row { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 16px;
+            margin-top: 1.5rem; /* Controlled space from content above */
+            flex-shrink: 0;
+        }
+        .card-stats { display: flex; gap: 12px; }
+        .stat-item { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; font-weight: 500; color: #777; }
+        .stat-item i { width: 16px; height: 16px; stroke-width: 2; }
+        .card-contributors { display: flex; align-items: center; }
+        .card-contributors img, .more-contributors { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--card-background); object-fit: cover; margin-left: -10px; }
+        .more-contributors { display: flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: 600; color: var(--text-color); background-color: var(--border-color); }
+        
+        /* Card Colors */
+        .card-purple .tech-stack span { background-color: rgba(88, 28, 135, 0.1); color: #581c87; }
+        .card-green .tech-stack span { background-color: rgba(22, 101, 52, 0.1); color: #166534; }
+        .card-blue .tech-stack span { background-color: rgba(30, 64, 175, 0.1); color: #1e40af; }
+        
+        /* --- Footer (UNCHANGED) --- */
+        .footer { background-color: #1e293b; color: #94a3b8; padding: 2.5rem 0; text-align: center; }
+        .footer p { margin-bottom: 1rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; list-style: none; }
+        .footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.2s ease; }
+        .footer-links a:hover { color: white; }
+        
+        /* --- Responsive Styles --- */
+        @media (max-width: 768px) {
+            .nav-desktop-links { display: none; }
+            .nav-burger { display: block; }
+            body.nav-open .burger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            body.nav-open .burger-line:nth-child(2) { opacity: 0; }
+            body.nav-open .burger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .hero-wrapper { padding: 1rem; }
+            .hero-container { padding: 1.5rem; height: calc(100vh - 95px); min-height: 550px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 1rem; }
+            .card-scroller { align-items: stretch;}
+            .project-card { flex: 0 0 280px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="nav-logo">DamarJati Hub</a>
+                <ul class="nav-desktop-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#" class="active">Explore</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Discussions</a></li>
+                    <li><a href="#">Contribute</a></li>
+                </ul>
+                <button class="nav-burger" id="burger-menu">
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                    <div class="burger-line"></div>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-mobile-menu" id="nav-menu">
+        <ul class="nav-mobile-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="explore1.html">Explore</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Discussions</a></li>
+            <li><a href="#">Contribute</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="hero-wrapper">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Temukan & Bangun Proyek Open Source Bersama</h1>
+                    <p>Jelajahi proyek-proyek inovatif dari komunitas developer di seluruh dunia.</p>
+                    <a href="explore1.html" class="hero-cta">Jelajahi Proyek</a>
+                </div>
+                <div class="card-scroller">
+                    <article class="project-card card-purple">
+                        <div class="card-header">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Logo" class="card-logo-inline">
+                            <h3 class="card-title">React Library</h3>
+                        </div>
+                        <p class="card-description">Pustaka JavaScript yang deklaratif, efisien, dan fleksibel untuk membangun antarmuka pengguna.</p>
+                        <div class="tech-stack"><span>JavaScript</span><span>UI</span><span>Library</span></div>
+                        <div class="card-meta-row">
+                            <div class="card-stats">
+                                <div class="stat-item"><i data-feather="star"></i><span>210k</span></div>
+                                <div class="stat-item"><i data-feather="users"></i><span>1.6k</span></div>
+                            </div>
+                            <div class="card-contributors">
+                                <img src="https://i.pravatar.cc/150?img=7" alt="Contributor">
+                                <img src="https://i.pravatar.cc/150?img=8" alt="Contributor">
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card card-green">
+                        <div class="card-header">
+                            <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" alt="Logo" class="card-logo-inline">
+                            <h3 class="card-title">Flutter Framework</h3>
+                        </div>
+                        <p class="card-description">Framework dari Google untuk membangun aplikasi mobile, web, dan desktop dari satu basis kode.</p>
+                        <div class="tech-stack"><span>Dart</span><span>Framework</span></div>
+                        <div class="card-meta-row">
+                            <div class="card-stats">
+                                <div class="stat-item"><i data-feather="star"></i><span>159k</span></div>
+                                <div class="stat-item"><i data-feather="users"></i><span>1.2k</span></div>
+                            </div>
+                            <div class="card-contributors">
+                                <img src="https://i.pravatar.cc/150?img=1" alt="Contributor">
+                                <img src="https://i.pravatar.cc/150?img=2" alt="Contributor">
+                            </div>
+                        </div>
+                    </article>
+                    <article class="project-card card-blue">
+                         <div class="card-header">
+                            <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="Logo" class="card-logo-inline">
+                            <h3 class="card-title">TensorFlow</h3>
+                        </div>
+                        <p class="card-description">Platform open-source ujung ke ujung untuk machine learning yang komprehensif dan fleksibel.</p>
+                        <div class="tech-stack"><span>Python</span><span>ML</span><span>AI</span></div>
+                        <div class="card-meta-row">
+                            <div class="card-stats">
+                                <div class="stat-item"><i data-feather="star"></i><span>178k</span></div>
+                                <div class="stat-item"><i data-feather="users"></i><span>2.5k</span></div>
+                            </div>
+                            <div class="card-contributors">
+                                <img src="https://i.pravatar.cc/150?img=3" alt="Contributor">
+                                <img src="https://i.pravatar.cc/150?img=4" alt="Contributor">
+                            </div>
+                        </div>
+                    </article>
+                     <article class="project-card card-purple">
+                        <div class="card-header">
+                            <img src="https://bestofjs.org/logos/vscode.svg" alt="Logo" class="card-logo-inline">
+                            <h3 class="card-title">VS Code</h3>
+                        </div>
+                        <p class="card-description">Editor kode sumber yang ringan namun kuat yang berjalan di desktop Anda dan tersedia untuk semua OS.</p>
+                        <div class="tech-stack"><span>TypeScript</span><span>Editor</span></div>
+                        <div class="card-meta-row">
+                            <div class="card-stats">
+                                <div class="stat-item"><i data-feather="star"></i><span>154k</span></div>
+                                <div class="stat-item"><i data-feather="users"></i><span>1.1k</span></div>
+                            </div>
+                            <div class="card-contributors">
+                                <img src="https://i.pravatar.cc/150?img=5" alt="Contributor">
+                                <img src="https://i.pravatar.cc/150?img=6" alt="Contributor">
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- 
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 DamarJati Hub. Dibuat dengan semangat open source.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">GitHub</a></li>
+            </ul>
+        </div>
+    </footer> 
+    -->
+
+    <script>
+        feather.replace();
+        const burgerMenu = document.getElementById('burger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        burgerMenu.addEventListener('click', () => {
+            document.body.classList.toggle('nav-open');
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
