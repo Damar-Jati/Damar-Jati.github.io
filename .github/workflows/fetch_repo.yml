@@ -1,0 +1,46 @@
+name: Fetch GitHub Repositories
+permissions:
+  contents: write 
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  fetch_repos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Fetch repository data
+        run: |
+          echo "Fetching repos for Damar-Jati..."
+          mkdir -p .github
+          curl -s "https://api.github.com/users/Damar-Jati/repos?per_page=100" \
+          | jq '[.[] | {
+              name: .name,
+              description: .description,
+              stars: .stargazers_count,
+              forks: .forks_count,
+              watchers: .watchers_count,
+              topics: .topics,
+              html_url: .html_url,
+              updated_at: .updated_at,
+              banner_url: ("https://opengraph.githubassets.com/1/Damar-Jati/" + .name)
+            }]' > .github/repo.json
+
+          echo "✅ .github/repo.json generated successfully with banner URLs!"
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/repo.json
+          git commit -m "Update repository data [skip ci]" || echo "No changes to commit"
+          git push
