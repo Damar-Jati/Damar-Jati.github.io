@@ -29,29 +29,7 @@
     "watchers": 0,
     "topics": [],
     "html_url": "https://github.com/Damar-Jati/Damar-Jati.github.io",
-    "updated_at": "2026-02-14T14:25:18Z",
+    "updated_at": "2026-02-14T15:23:06Z",
     "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/Damar-Jati.github.io"
-  },
-  {
-    "name": "hyperswitch",
-    "description": "An open source payments switch written in Rust to make payments fast, reliable and affordable",
-    "stars": 0,
-    "forks": 0,
-    "watchers": 0,
-    "topics": [],
-    "html_url": "https://github.com/Damar-Jati/hyperswitch",
-    "updated_at": "2025-10-11T07:51:24Z",
-    "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/hyperswitch"
-  },
-  {
-    "name": "payload",
-    "description": "Payload is the open-source, fullstack Next.js framework, giving you instant backend superpowers. Get a full TypeScript backend and admin panel instantly. Use Payload as a headless CMS or for building powerful applications.",
-    "stars": 0,
-    "forks": 0,
-    "watchers": 0,
-    "topics": [],
-    "html_url": "https://github.com/Damar-Jati/payload",
-    "updated_at": "2025-10-11T07:49:13Z",
-    "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/payload"
   }
 ]
