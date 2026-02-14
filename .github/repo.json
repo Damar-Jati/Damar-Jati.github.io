@@ -11,17 +11,6 @@
     "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/.github"
   },
   {
-    "name": "bevy",
-    "description": "A refreshingly simple data-driven game engine built in Rust",
-    "stars": 0,
-    "forks": 0,
-    "watchers": 0,
-    "topics": [],
-    "html_url": "https://github.com/Damar-Jati/bevy",
-    "updated_at": "2025-10-11T07:44:44Z",
-    "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/bevy"
-  },
-  {
     "name": "cagliostro-webui",
     "description": null,
     "stars": 0,
@@ -40,7 +29,7 @@
     "watchers": 0,
     "topics": [],
     "html_url": "https://github.com/Damar-Jati/Damar-Jati.github.io",
-    "updated_at": "2026-02-14T13:42:51Z",
+    "updated_at": "2026-02-14T14:25:18Z",
     "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/Damar-Jati.github.io"
   },
   {
@@ -64,27 +53,5 @@
     "html_url": "https://github.com/Damar-Jati/payload",
     "updated_at": "2025-10-11T07:49:13Z",
     "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/payload"
-  },
-  {
-    "name": "server",
-    "description": "☁️ Nextcloud server, a safe home for all your data",
-    "stars": 0,
-    "forks": 0,
-    "watchers": 0,
-    "topics": [],
-    "html_url": "https://github.com/Damar-Jati/server",
-    "updated_at": "2025-10-11T07:50:00Z",
-    "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/server"
-  },
-  {
-    "name": "twenty",
-    "description": "Building a modern alternative to Salesforce, powered by the community.",
-    "stars": 0,
-    "forks": 0,
-    "watchers": 0,
-    "topics": [],
-    "html_url": "https://github.com/Damar-Jati/twenty",
-    "updated_at": "2025-10-11T07:46:43Z",
-    "banner_url": "https://opengraph.githubassets.com/1/Damar-Jati/twenty"
   }
 ]
